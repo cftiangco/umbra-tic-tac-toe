@@ -4,12 +4,23 @@ import { useLocation } from 'react-router-dom';
 import Board from "../components/Board"
 import Box from "../components/Box"
 
+interface IScore {
+    playerOne:number;
+    playerTwo:number;
+    draw:number;
+}
+
 const Game = () => {
     const location = useLocation();
     const data = location.state;
 
     const [board, setBoard] = useState(Array(9).fill(''))
     const [isXNext, setIsXNext] = useState<boolean>(true)
+    const [score,setScore] = useState<IScore>({
+        playerOne:0,
+        playerTwo:0,
+        draw:0
+    })
 
     const handleOnClickBox = (index:number) => {
         const newBoard = [...board];
@@ -25,14 +36,23 @@ const Game = () => {
 
         if(checkWinner(newBoard)) {
             if(isXNext) {
-                console.log(`player 1 win`)
+                setScore(prevData => ({
+                    ...prevData,
+                    playerOne: prevData.playerOne + 1
+                }))
             } else {
-                console.log(`player 2 win`)
+                setScore(prevData => ({
+                    ...prevData,
+                    playerTwo: prevData.playerTwo + 1
+                }))
             }
         }
 
         if(checkIfDraw(board)) {
-            console.log('This is draw');
+            setScore(prevData => ({
+                ...prevData,
+                draw: prevData.draw + 1
+            }))
         }
 
     }
@@ -73,12 +93,10 @@ const Game = () => {
 
     }
 
-    console.log(`data:`, data);
-
     return (
         <div className="h-screen">
             <Board>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-1">
                     <Box onClickBox={() => handleOnClickBox(0)} value={board[0]}/>
                     <Box onClickBox={() => handleOnClickBox(1)} value={board[1]}/>
                     <Box onClickBox={() => handleOnClickBox(2)} value={board[2]}/>
@@ -91,8 +109,14 @@ const Game = () => {
                 </div>
 
                 <div className="flex-col items-center justify-center mt-4">
-                    <h4 className="text-white text-sm">Player 1: {data.playerOne.toUpperCase()} (X)</h4>
-                    <h4 className="text-white text-sm">Player 2: {data.playerTwo.toUpperCase()} (O)</h4>
+                    <div className="flex items-center justify-between text-white text-sm">
+                        <h4 >Player 1: {data.playerOne.toUpperCase()} (X)</h4>
+                        <h4>Player 2: {data.playerTwo.toUpperCase()} (O)</h4>
+                    </div>
+                    <div className="mt-3 flex flex-col items-center justify-center text-white text-lg font-bold">
+                        <h3>{score.playerOne} - {score.draw} - {score.playerTwo}</h3>
+                        <h5 className="text-sm font-normal">Score</h5>
+                    </div>
                 </div>
 
             </Board>
