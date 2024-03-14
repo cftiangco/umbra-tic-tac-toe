@@ -1,9 +1,12 @@
 import { useState } from "react"
+import { useLocation } from 'react-router-dom';
 
 import Board from "../components/Board"
 import Box from "../components/Box"
 
 const Game = () => {
+    const location = useLocation();
+    const data = location.state;
 
     const [board, setBoard] = useState(Array(9).fill(''))
     const [isXNext, setIsXNext] = useState<boolean>(true)
@@ -49,7 +52,6 @@ const Game = () => {
     const checkWinner = (board:any) => {
 
         const lines = [
-            //a, b, c
             [0, 1, 2],
             [3, 4, 5],
             [6, 7, 8],
@@ -71,6 +73,7 @@ const Game = () => {
 
     }
 
+    console.log(`data:`, data);
 
     return (
         <div className="h-screen">
@@ -86,6 +89,12 @@ const Game = () => {
                     <Box onClickBox={() => handleOnClickBox(7)} value={board[7]}/>
                     <Box onClickBox={() => handleOnClickBox(8)} value={board[8]}/>
                 </div>
+
+                <div className="flex-col items-center justify-center mt-4">
+                    <h4 className="text-white text-sm">Player 1: {data.playerOne.toUpperCase()} (X)</h4>
+                    <h4 className="text-white text-sm">Player 2: {data.playerTwo.toUpperCase()} (O)</h4>
+                </div>
+
             </Board>
         </div>
     )

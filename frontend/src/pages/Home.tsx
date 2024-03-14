@@ -1,10 +1,20 @@
 
 import { useState } from "react"
+import { useNavigate } from 'react-router-dom';
 
 import {SMButton, LGButton} from "../components/Button"
 import TextBox from "../components/TextBox"
 
+/* 
+    SCREENS:
+    1 = Start New Game
+    2 = Input Player One name
+    3 = Input Player Two name
+*/
+
 const Home = () => {
+
+    const navigate = useNavigate();
 
     const [playerOne,setPlayerOne] = useState<string>('')
     const [playerTwo,setPlayerTwo] = useState<string>('')
@@ -19,7 +29,11 @@ const Home = () => {
     }
 
     const handleStart = () => {
-        console.log(`start`)
+        const data = {
+            playerOne: playerOne,
+            playerTwo: playerTwo,
+        }
+        navigate('/game', {state:data});
     }
 
     return (
