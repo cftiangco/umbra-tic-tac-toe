@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Board from "../components/Board"
 import Box from "../components/Box"
+import GameModal from "../components/GameModal";
 
 interface IScore {
     playerOne:number;
@@ -10,9 +12,16 @@ interface IScore {
     draw:number;
 }
 
+interface IGameModal {
+    visible:boolean;
+    message:string;
+}
+
 const Game = () => {
     const location = useLocation();
     const data = location.state;
+
+    const navigate = useNavigate();
 
     const [board, setBoard] = useState(Array(9).fill(''))
     const [isXNext, setIsXNext] = useState<boolean>(true)
@@ -20,6 +29,10 @@ const Game = () => {
         playerOne:0,
         playerTwo:0,
         draw:0
+    })
+    const [gameModal,setGameModal] = useState<IGameModal>({
+        visible: false,
+        message: '',
     })
 
     const handleOnClickBox = (index:number) => {
@@ -40,11 +53,13 @@ const Game = () => {
                     ...prevData,
                     playerOne: prevData.playerOne + 1
                 }))
+                setGameModal({message:'Player 1 win!',visible:true})
             } else {
                 setScore(prevData => ({
                     ...prevData,
                     playerTwo: prevData.playerTwo + 1
                 }))
+                setGameModal({message:'Player 2 win!',visible:true})
             }
         }
 
@@ -53,6 +68,7 @@ const Game = () => {
                 ...prevData,
                 draw: prevData.draw + 1
             }))
+            setGameModal({message:'Draw!',visible:true})
         }
 
     }
@@ -65,7 +81,6 @@ const Game = () => {
                 count++;
             }
         })
-        console.log(`count: `, count)
         return count >= 9 ? true : false
     }
 
@@ -93,8 +108,29 @@ const Game = () => {
 
     }
 
+    const handleOnClickContinue = () => {
+        setGameToDefault()
+    }
+
+    const handleOnClickStop = () => {
+        setGameToDefault()
+        navigate('/');
+    }
+
+    const setGameToDefault = () => {
+        setBoard(Array(9).fill(''))
+        setIsXNext(true)
+        setGameModal({visible:false,message:''})
+    }
+
     return (
         <div className="h-screen">
+            <GameModal 
+                visible={gameModal.visible}
+                message={gameModal.message}
+                onClickContinue={handleOnClickContinue}
+                onClickStop={handleOnClickStop}
+            />
             <Board>
                 <div className="grid grid-cols-3 gap-1">
                     <Box onClickBox={() => handleOnClickBox(0)} value={board[0]}/>
@@ -109,11 +145,11 @@ const Game = () => {
                 </div>
 
                 <div className="flex-col items-center justify-center mt-4">
-                    <div className="flex items-center justify-between text-white text-sm">
-                        <h4 >Player 1: {data.playerOne.toUpperCase()} (X)</h4>
-                        <h4>Player 2: {data.playerTwo.toUpperCase()} (O)</h4>
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between text-white text-sm">
+                        <h4 className="font-bold">Player 1: {data.playerOne.toUpperCase()} (X)</h4>
+                        <h4 className="font-bold">Player 2: {data.playerTwo.toUpperCase()} (O)</h4>
                     </div>
-                    <div className="mt-3 flex flex-col items-center justify-center text-white text-lg font-bold">
+                    <div className="mt-3 flex flex-col items-start md:items-center justify-center text-white text-lg font-bold">
                         <h3>{score.playerOne} - {score.draw} - {score.playerTwo}</h3>
                         <h5 className="text-sm font-normal">Score</h5>
                     </div>

@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom';
 
 import {SMButton, LGButton} from "../components/Button"
@@ -36,9 +36,15 @@ const Home = () => {
         navigate('/game', {state:data});
     }
 
+    useEffect(() => {
+        setPlayerOne('')
+        setPlayerTwo('')
+        setRightScreen(1)
+    },[])
+
     return (
         <div className="flex h-screen w-full">
-            <div className="bg-red-100 h-full w-full">1</div>
+            <div className="bg-gray-200 h-full w-full">1</div>
 
             <div className="h-full w-full flex flex-col items-center justify-center">
 
@@ -57,11 +63,13 @@ const Home = () => {
                             onChange={(e:any) => handleOnChangePlayerOne(e.target.value)}
                         />
                         <div className="flex items-center gap-2">
-                            <SMButton 
+                            <SMButton
+                                type="light"  
                                 label="Back"
                                 onClick={() => setRightScreen(1)} 
                             />
-                            <SMButton 
+                            <SMButton
+                                type="primary"  
                                 label="Next"
                                 onClick={() => setRightScreen(3)} 
                             />
@@ -77,12 +85,14 @@ const Home = () => {
                             onChange={(e:any) => handleOnChangePlayerTwo(e.target.value)}
                         />
                         <div className="flex items-center gap-2">
-                            <SMButton 
+                            <SMButton
+                                type="light"
                                 label="Back"
                                 onClick={() => setRightScreen(2)} 
                             />
                             <SMButton 
                                 label="Start"
+                                type="primary"
                                 onClick={handleStart} 
                             />
                         </div>
