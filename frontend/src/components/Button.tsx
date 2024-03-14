@@ -4,7 +4,7 @@
     onClick?:any;
  }
 
- const Button = ({label,onClick}:IButton) => {
+ export const SMButton = ({label,onClick}:IButton) => {
     return (
         <button
             onClick={onClick} 
@@ -14,4 +14,12 @@
     )
  }
 
- export default Button
+ export const LGButton = ({label,onClick}:IButton) => {
+    return (
+        <button
+            onClick={onClick} 
+            className="bg-teal-400 text-slate-100 font-bold w-64 h-12 rounded-lg shadow hover:bg-teal-500">
+                {label}
+        </button>
+    )
+ }

@@ -1,7 +1,7 @@
 
 import { useState } from "react"
 
-import Button from "../components/Button"
+import {SMButton, LGButton} from "../components/Button"
 import TextBox from "../components/TextBox"
 
 const Home = () => {
@@ -29,7 +29,7 @@ const Home = () => {
             <div className="h-full w-full flex flex-col items-center justify-center">
 
                 {rightScreen === 1 && (
-                    <Button 
+                    <LGButton 
                         label="Start New Game"
                         onClick={() => setRightScreen(2)}
                     />
@@ -43,11 +43,11 @@ const Home = () => {
                             onChange={(e:any) => handleOnChangePlayerOne(e.target.value)}
                         />
                         <div className="flex items-center gap-2">
-                            <Button 
+                            <SMButton 
                                 label="Back"
                                 onClick={() => setRightScreen(1)} 
                             />
-                            <Button 
+                            <SMButton 
                                 label="Next"
                                 onClick={() => setRightScreen(3)} 
                             />
@@ -63,11 +63,11 @@ const Home = () => {
                             onChange={(e:any) => handleOnChangePlayerTwo(e.target.value)}
                         />
                         <div className="flex items-center gap-2">
-                            <Button 
+                            <SMButton 
                                 label="Back"
                                 onClick={() => setRightScreen(2)} 
                             />
-                            <Button 
+                            <SMButton 
                                 label="Start"
                                 onClick={handleStart} 
                             />
