@@ -7,7 +7,7 @@ interface IBoard {
 
 const Board = ({children}:IBoard) => {
     return (
-        <div className="bg-teal-400 flex items-center justify-center w-full h-full cursor-pointer">
+        <div className="flex items-center justify-center w-full h-full cursor-pointer">
             <div>{children}</div>
         </div>
     )

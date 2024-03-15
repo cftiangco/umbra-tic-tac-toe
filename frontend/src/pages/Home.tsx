@@ -1,9 +1,14 @@
 
 import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom';
+import moment from "moment";
 
 import {SMButton, LGButton} from "../components/Button"
 import TextBox from "../components/TextBox"
+
+import { IPlayers } from "../interfaces";
+
+import { getAllSessions } from "../API/API";
 
 /* 
     SCREENS:
@@ -12,12 +17,6 @@ import TextBox from "../components/TextBox"
     3 = Input Player Two name
 */
 
-
-interface IPlayers {
-    playerOneName: string
-    playerTwoName: string
-}
-
 const Home = () => {
 
     const navigate = useNavigate();
@@ -25,6 +24,8 @@ const Home = () => {
     const [playerOne,setPlayerOne] = useState<string>('')
     const [playerTwo,setPlayerTwo] = useState<string>('')
     const [rightScreen,setRightScreen] = useState<number>(1)
+
+    const [sessions,setSessions] = useState<any>([]);
 
     const handleOnChangePlayerOne = (value:string) => {
         setPlayerOne(value);
@@ -42,15 +43,26 @@ const Home = () => {
         navigate('/game', {state:data});
     }
 
+    const fetchSessions = async () => {
+        
+        try {
+            const response = await getAllSessions();
+            setSessions(response)
+            console.log(response)
+        } catch (error) {
+            alert('Failed: Unable to get all session')
+        }
+    }
+
     useEffect(() => {
         setPlayerOne('')
         setPlayerTwo('')
         setRightScreen(1)
+        fetchSessions()
     },[])
 
     return (
-        <div className="flex h-screen w-full">
-            <div className="bg-gray-200 h-full w-full">1</div>
+        <div className="flex flex-col md:flex-row h-screen w-full">
 
             <div className="h-full w-full flex flex-col items-center justify-center">
 
@@ -106,6 +118,47 @@ const Home = () => {
                 )}
 
                 
+            </div>
+
+            <div className="h-full w-full">
+                <div className="flex flex-col items-center justify-center h-full">
+                    <div className="max-h-96 overflow-y-auto w-96">
+                        <h1 className="mb-3 text-slate-100 text-lg font-bold">Game History</h1>
+                        {sessions.map((row:any,idx:number) => (
+                            <div key={idx} className="w-80">
+                                <div className="flex items-center justify-between w-ful border-b border-slate-600 py-1">
+                                    <div>
+                                        <h4 className="text-slate-100">{row.playerOneName} vs. {row.playerTwoName}</h4>
+                                        <span className="text-xs text-slate-400">{moment(row.createdAt).fromNow()}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <div className="flex flex-col items-center justify-center">
+                                            <div className="border w-8 h-6 bg-slate-300">
+                                                <p className="text-slate-800 m-0 p-0 text-center text-sm">{row.score.playerOne}</p>
+                                            </div>
+                                            <span className="text-xs mt-1 text-slate-400">P1</span>
+                                        </div>
+
+                                        <div className="flex flex-col items-center justify-center">
+                                            <div className="border w-8 h-6 bg-slate-300">
+                                                <p className="text-slate-800 m-0 p-0 text-center text-sm">{row.score.playerOne}</p>
+                                            </div>
+                                            <span className="text-xs mt-1 text-slate-400">D</span>
+                                        </div>
+
+                                        <div className="flex flex-col items-center justify-center">
+                                            <div className="border w-8 h-6 bg-slate-300">
+                                                <p className="text-slate-800 m-0 p-0 text-center text-sm">{row.score.playerOne}</p>
+                                            </div>
+                                            <span className="text-xs mt-1 text-slate-400">P2</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
 
 

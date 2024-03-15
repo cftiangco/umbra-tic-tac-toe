@@ -9,11 +9,11 @@
  const setTypeColor = (type:string) => {
     switch(type) {
         case 'primary':
-            return "bg-teal-500 hover:bg-teal-400";
+            return "bg-teal-500 hover:bg-teal-400 text-slate-100";
         case 'danger':
-            return "bg-red-500 hover:bg-red-400";
+            return "bg-red-500 hover:bg-red-400 text-slate-100";
         case 'light':
-            return "bg-gray-500 hover:bg-gray-400";
+            return "bg-gray-400 hover:bg-gray-300 text-slate-100";
     }
  }
 
@@ -24,7 +24,7 @@
     return (
         <button
             onClick={onClick} 
-            className={`${color} text-slate-100 font-bold w-24 h-10 rounded-lg shadow text-sm`}>
+            className={`${color} font-bold w-24 h-10 rounded-lg shadow text-sm`}>
                 {label}
         </button>
     )
@@ -37,7 +37,7 @@
     return (
         <button
             onClick={onClick} 
-            className={`${color} text-slate-100 font-bold w-32 h-11 rounded-lg shadow`}>
+            className={`${color}  font-bold w-32 h-11 rounded-lg shadow`}>
                 {label}
         </button>
     )

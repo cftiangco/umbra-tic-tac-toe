@@ -6,21 +6,9 @@ import Board from "../components/Board"
 import Box from "../components/Box"
 import GameModal from "../components/GameModal";
 
-interface IScore {
-    playerOne:number;
-    playerTwo:number;
-    draw:number;
-}
+import { IPlayers,IScore,IGameModal,ISession } from "../interfaces";
 
-interface IGameModal {
-    visible:boolean;
-    message:string;
-}
-
-interface IPlayers {
-    playerOneName: string
-    playerTwoName: string
-}
+import { storeSession } from "../API/API";
 
 const Game = () => {
     const location = useLocation();
@@ -117,17 +105,21 @@ const Game = () => {
         setGameToDefault()
     }
 
-    const handleOnClickStop = () => {
+    const handleOnClickStop = async () => {
 
-        let session = {
+        let session:ISession = {
             score: score,
             playerOne: data.playerOneName,
             playerTwo: data.playerTwoName,
         }
 
-        console.log(`session: `, session)
-        // setGameToDefault()
-        // navigate('/');
+        try {
+            await storeSession(session);
+            setGameToDefault()
+            navigate('/');
+        } catch (error) {
+            alert('Failed: Unable to store session')
+        }
     }
 
     const setGameToDefault = () => {
