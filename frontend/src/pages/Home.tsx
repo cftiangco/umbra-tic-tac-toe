@@ -169,17 +169,22 @@ const Home = () => {
                 <div className="flex flex-col items-center justify-center h-full">
                     <h1 className="mb-6 text-slate-100 text-lg font-bold">Game History</h1>
                     <div className="max-h-96 overflow-y-auto w-96">
-                        {sessions.map((row:any,idx:number) => (
-                            <SessionStats
-                                key={idx} 
-                                playerOneName={row.playerOneName}
-                                playerTwoName={row.playerTwoName}
-                                playerOneScore={row.score.playerOne}
-                                playerTwoScore={row.score.playerTwo}
-                                draw={row.score.draw}
-                                timestamp={row.createdAt}
-                            />
-                        ))}
+                        {sessions.length > 0 ? (
+                            sessions.map((row:any,idx:number) => (
+                                <SessionStats
+                                    key={idx} 
+                                    playerOneName={row.playerOneName}
+                                    playerTwoName={row.playerTwoName}
+                                    playerOneScore={row.score.playerOne}
+                                    playerTwoScore={row.score.playerTwo}
+                                    draw={row.score.draw}
+                                    timestamp={row.createdAt}
+                                />
+                            ))
+                        ):(
+                            <h2 className="text-center text-slate-100 text-xs">No available data</h2>
+                        )}
+                        
                     </div>
                 </div>
             </div>
