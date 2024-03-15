@@ -1,11 +1,11 @@
 
 
-interface ISessionInfo {
+interface ISessionScore {
     score:number,
     label:string
 }
 
-const SessionInfo = ({score,label}:ISessionInfo) => {
+const SessionScore = ({score,label}:ISessionScore) => {
     return (
         <div className="flex flex-col items-center justify-center">
             <div className="border w-8 h-6 bg-slate-300">
@@ -16,4 +16,4 @@ const SessionInfo = ({score,label}:ISessionInfo) => {
     )
 }
 
-export default SessionInfo
+export default SessionScore
