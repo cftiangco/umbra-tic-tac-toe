@@ -1,5 +1,5 @@
 module.exports = {
-    mongoURI: 'mongodb+srv://cluster0.baf8idl.mongodb.net/tictactoe?retryWrites=true&w=majority&appName=Cluster0',
-    username: 'cftiangco',
-    password: 'Linux@1991v6',
+    mongoURI: process.env.DB_URI,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
 };

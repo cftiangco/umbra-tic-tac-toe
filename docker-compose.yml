@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  frontend:
+    depends_on:
+      - backend
+    container_name: frontend
+    build: ./frontend
+    ports:
+      - "3000:80"
+    networks:
+      - umbra-network
+  backend:
+    container_name: backend
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_URI=mongodb+srv://cluster0.baf8idl.mongodb.net/tictactoe?retryWrites=true&w=majority&appName=Cluster0
+      - DB_USERNAME=cftiangco
+      - DB_PASSWORD=Linux@1991v6
+    networks:
+      - umbra-network
+
+networks:
+  umbra-network:
+    driver: bridge
+
