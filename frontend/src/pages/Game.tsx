@@ -67,13 +67,14 @@ const Game = () => {
     }
 
     const checkIfDraw = (board:any) => {
-        let count = 1;
+        let count = 0;
 
         board.map((b:any) => {
             if(b !== "") {
                 count++;
             }
         })
+        console.log(`count:`,count);
         return count >= 9 ? true : false
     }
 
@@ -137,7 +138,7 @@ const Game = () => {
                 onClickStop={handleOnClickStop}
             />
             <Board>
-                <div className="grid grid-cols-3 gap-1">
+                <div className="grid grid-cols-3 gap-1 mt-5 md:mt-20">
                     <Box onClickBox={() => handleOnClickBox(0)} value={board[0]}/>
                     <Box onClickBox={() => handleOnClickBox(1)} value={board[1]}/>
                     <Box onClickBox={() => handleOnClickBox(2)} value={board[2]}/>

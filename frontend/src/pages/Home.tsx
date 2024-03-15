@@ -103,8 +103,7 @@ const Home = () => {
 
     return (
         <div className="flex flex-col md:flex-row h-screen w-full">
-
-            <div className="h-full w-full flex flex-col items-center justify-center">
+            <div className="h-full w-full flex flex-col items-center justify-center mt-10 md:mt-0">
 
                 {rightScreen === 1 && (
                     <LGButton 

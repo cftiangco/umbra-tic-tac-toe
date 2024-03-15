@@ -11,7 +11,7 @@ interface IGameModal {
 const GameModal = ({message,visible=false,onClickContinue,onClickStop}:IGameModal) => {
     return (
         <Modal visible={visible}>
-            <div className="h-52 md:h-64 w-64 md:w-80 bg-white bg-opacity-75 rounded flex items-center justify-center shadow">
+            <div className="h-52 md:h-64 w-64 md:w-80 bg-white bg-opacity-60 rounded flex items-center justify-center shadow">
                 <div className="flex flex-col">
                     <div className="mb-8 flex items-center justify-center">
                         <h2 className="text-xl font-bold text-slate-800">{message}</h2>
