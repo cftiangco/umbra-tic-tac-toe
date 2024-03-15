@@ -17,6 +17,11 @@ import SessionStats from "../components/SessionStats";
     3 = Input Player Two name
 */
 
+interface IValidation {
+    error:boolean;
+    message:string;
+}
+
 const Home = () => {
 
     const navigate = useNavigate();
@@ -27,11 +32,43 @@ const Home = () => {
 
     const [sessions,setSessions] = useState<any>([]);
 
+    const [playerOneError, setPlayerOneError] = useState<IValidation>({
+        error:true,
+        message: ''
+    })
+
+    const [playerTwoError, setPlayerTwoError] = useState<IValidation>({
+        error:true,
+        message: ''
+    })
+
     const handleOnChangePlayerOne = (value:string) => {
+        if(value.length > 12) {
+            setPlayerOneError({error:false,message:'The name cannot exceed 12 characters in length.'})
+            return
+        }
+
+        if(value.length > 0) {
+            setPlayerOneError({error:false,message:''})
+        } else {
+            setPlayerOneError({error:true,message:'Name is required and cannot be empty.'})
+        }
+
         setPlayerOne(value);
     }
 
     const handleOnChangePlayerTwo = (value:string) => {
+        if(value.length > 12) {
+            setPlayerTwoError({error:false,message:'The name cannot exceed 12 characters in length.'})
+            return
+        }
+
+        if(value.length > 0) {
+            setPlayerTwoError({error:false,message:''})
+        } else {
+            setPlayerTwoError({error:true,message:'Name is required and cannot be empty.'})
+        }
+        
         setPlayerTwo(value);
     }
 
@@ -48,10 +85,13 @@ const Home = () => {
         try {
             const response = await getAllSessions();
             setSessions(response)
-            console.log(response)
         } catch (error) {
             alert('Failed: Unable to get all session')
         }
+    }
+
+    const handleNextPlayerOne = () => {
+        setRightScreen(3)
     }
 
     useEffect(() => {
@@ -79,6 +119,8 @@ const Home = () => {
                             label="Player 1 Name"
                             value={playerOne}
                             onChange={(e:any) => handleOnChangePlayerOne(e.target.value)}
+                            error={playerOneError.message.length > 0}
+                            errorMessage={playerOneError.message}
                         />
                         <div className="flex items-center gap-2">
                             <SMButton
@@ -87,9 +129,10 @@ const Home = () => {
                                 onClick={() => setRightScreen(1)} 
                             />
                             <SMButton
-                                type="primary"  
+                                type={playerOneError.error ? 'disabled':'primary'}
+                                disabled={playerOneError.error}  
                                 label="Next"
-                                onClick={() => setRightScreen(3)} 
+                                onClick={handleNextPlayerOne} 
                             />
                         </div>
                     </div>
@@ -101,6 +144,8 @@ const Home = () => {
                             label="Player 2 Name"
                             value={playerTwo}
                             onChange={(e:any) => handleOnChangePlayerTwo(e.target.value)}
+                            error={playerTwoError.message.length > 0}
+                            errorMessage={playerTwoError.message}
                         />
                         <div className="flex items-center gap-2">
                             <SMButton
@@ -109,8 +154,9 @@ const Home = () => {
                                 onClick={() => setRightScreen(2)} 
                             />
                             <SMButton 
+                                type={playerTwoError.error ? 'disabled':'primary'}
+                                disabled={playerTwoError.error}  
                                 label="Start"
-                                type="primary"
                                 onClick={handleStart} 
                             />
                         </div>

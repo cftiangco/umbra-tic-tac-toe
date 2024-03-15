@@ -22,7 +22,9 @@ const SessionStats = ({
         <div className="w-80">
             <div className="flex items-center justify-between w-ful border-b border-slate-600 py-1">
                 <div>
-                    <h4 className="text-slate-100">{playerOneName} vs. {playerTwoName}</h4>
+                    <h4 className="text-slate-100">
+                        {playerOneName} <span className="text-xs">(P1)</span> vs. {playerTwoName} <span className="text-xs">(P2)</span>
+                    </h4>
                     <span className="text-xs text-slate-400">{moment(timestamp).fromNow()}</span>
                 </div>
                 <div className="flex items-center gap-1">
@@ -37,7 +39,7 @@ const SessionStats = ({
                     />
 
                     <SessionScore 
-                        label="P1"
+                        label="P2"
                         score={playerTwoScore}                                        
                     />
                     

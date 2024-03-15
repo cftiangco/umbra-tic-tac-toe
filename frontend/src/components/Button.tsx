@@ -3,6 +3,7 @@
     label:string;
     onClick?:any;
     type?:string;
+    disabled?:boolean;
  }
 
 
@@ -14,6 +15,8 @@
             return "bg-red-500 hover:bg-red-400 text-slate-100";
         case 'light':
             return "bg-gray-400 hover:bg-gray-300 text-slate-100";
+        case 'disabled':
+            return "bg-gray-600 text-slate-400 cursor-not-allowed"
     }
  }
 
@@ -30,14 +33,14 @@
     )
  }
 
- export const SMButton = ({label,onClick,type="primary"}:IButton) => {
+ export const SMButton = ({label,onClick,type="primary",disabled}:IButton) => {
    
     let color = setTypeColor(type)
 
     return (
         <button
-            onClick={onClick} 
-            className={`${color}  font-bold w-32 h-11 rounded-lg shadow`}>
+            onClick={disabled ? null:onClick} 
+            className={`${color} font-bold w-32 h-11 rounded-lg shadow`}>
                 {label}
         </button>
     )
