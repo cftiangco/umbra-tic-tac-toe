@@ -1,11 +1,10 @@
 
 const Game = require('../models/game.model')
 
-const storeSession = async(req,res) => {
+const storeGame = async(req,res) => {
     const {score,playerOne,playerTwo} = req.body
     
     try {
-        
         let newSession = {
             score: score,
             playerOneName: playerOne,
@@ -20,6 +19,16 @@ const storeSession = async(req,res) => {
     }
 }
 
+const getAllGames = async (req,res) => {
+    try {
+        const games = await Game.find();
+        res.status(200).json(games)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
 module.exports = {
-    storeSession,
+    storeGame,
+    getAllGames,
 }

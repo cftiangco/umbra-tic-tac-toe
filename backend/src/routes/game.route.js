@@ -2,8 +2,9 @@
 const express = require('express');
 const router = express.Router();
 
-const {storeSession} = require('../controllers/game.controller')
+const {storeGame,getAllGames} = require('../controllers/game.controller')
 
-router.post('/', storeSession);
+router.post('/', storeGame);
+router.get('/', getAllGames);
 
 module.exports = router;

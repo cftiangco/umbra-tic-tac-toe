@@ -12,11 +12,9 @@ mongoose.connect(config.mongoURI, {
   useUnifiedTopology: true,
   user: 'cftiangco',
   pass: 'Linux@1991v6',
-})
-.then(() => {
+}).then(() => {
   console.log('Connected to MongoDB');
-})
-.catch((err) => {
+}).catch((err) => {
   console.error('Error connecting to MongoDB:', err.message);
 });
 
