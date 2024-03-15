@@ -17,9 +17,14 @@ interface IGameModal {
     message:string;
 }
 
+interface IPlayers {
+    playerOneName: string
+    playerTwoName: string
+}
+
 const Game = () => {
     const location = useLocation();
-    const data = location.state;
+    const data:IPlayers = location.state;
 
     const navigate = useNavigate();
 
@@ -113,8 +118,16 @@ const Game = () => {
     }
 
     const handleOnClickStop = () => {
-        setGameToDefault()
-        navigate('/');
+
+        let session = {
+            score: score,
+            playerOne: data.playerOneName,
+            playerTwo: data.playerTwoName,
+        }
+
+        console.log(`session: `, session)
+        // setGameToDefault()
+        // navigate('/');
     }
 
     const setGameToDefault = () => {
@@ -146,8 +159,8 @@ const Game = () => {
 
                 <div className="flex-col items-center justify-center mt-4">
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between text-white text-sm">
-                        <h4 className="font-bold">Player 1: {data.playerOne.toUpperCase()} (X)</h4>
-                        <h4 className="font-bold">Player 2: {data.playerTwo.toUpperCase()} (O)</h4>
+                        <h4 className="font-bold">Player 1: {data.playerOneName.toUpperCase()} (X)</h4>
+                        <h4 className="font-bold">Player 2: {data.playerTwoName.toUpperCase()} (O)</h4>
                     </div>
                     <div className="mt-3 flex flex-col items-start md:items-center justify-center text-white text-lg font-bold">
                         <h3>{score.playerOne} - {score.draw} - {score.playerTwo}</h3>

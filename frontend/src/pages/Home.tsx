@@ -12,6 +12,12 @@ import TextBox from "../components/TextBox"
     3 = Input Player Two name
 */
 
+
+interface IPlayers {
+    playerOneName: string
+    playerTwoName: string
+}
+
 const Home = () => {
 
     const navigate = useNavigate();
@@ -29,9 +35,9 @@ const Home = () => {
     }
 
     const handleStart = () => {
-        const data = {
-            playerOne: playerOne,
-            playerTwo: playerTwo,
+        const data:IPlayers = {
+            playerOneName: playerOne,
+            playerTwoName: playerTwo,
         }
         navigate('/game', {state:data});
     }
