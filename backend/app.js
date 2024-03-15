@@ -11,8 +11,8 @@ const app = express();
 mongoose.connect(config.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  user: 'cftiangco',
-  pass: 'Linux@1991v6',
+  user: config.username,
+  pass: config.password,
 }).then(() => {
     console.log('Connected to MongoDB');
 }).catch((err) => {
