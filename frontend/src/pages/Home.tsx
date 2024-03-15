@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import {SMButton, LGButton} from "../components/Button"
 import TextBox from "../components/TextBox"
+import Loading from "../components/Loading";
 
 import { IPlayers } from "../interfaces";
 
@@ -36,6 +37,8 @@ const Home = () => {
         error:true,
         message: ''
     })
+
+    const [loadingVisible, setLoadingVisible] = useState<boolean>(false)
 
     const [playerTwoError, setPlayerTwoError] = useState<IValidation>({
         error:true,
@@ -81,12 +84,14 @@ const Home = () => {
     }
 
     const fetchSessions = async () => {
-        
+        setLoadingVisible(true)
         try {
             const response = await getAllSessions();
             setSessions(response)
+            setLoadingVisible(false)
         } catch (error) {
             alert('Failed: Unable to get all session')
+            setLoadingVisible(false)
         }
     }
 
@@ -103,6 +108,9 @@ const Home = () => {
 
     return (
         <div className="flex flex-col md:flex-row h-screen w-full">
+
+            <Loading visible={loadingVisible}/>
+
             <div className="h-full w-full flex flex-col items-center justify-center mt-10 md:mt-0">
 
                 {rightScreen === 1 && (

@@ -1,14 +1,16 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import Board from "../components/Board"
 import Box from "../components/Box"
 import GameModal from "../components/GameModal";
+import Loading from "../components/Loading";
 
 import { IPlayers,IScore,IGameModal,ISession } from "../interfaces";
 
 import { storeSession } from "../API/API";
+import ScoreBoard from "../components/ScoreBoard";
 
 const Game = () => {
     const location = useLocation();
@@ -27,6 +29,8 @@ const Game = () => {
         visible: false,
         message: '',
     })
+
+    const [loadingVisible, setLoadingVisible] = useState<boolean>(false)
 
     const handleOnClickBox = (index:number) => {
         const newBoard = [...board];
@@ -54,9 +58,7 @@ const Game = () => {
                 }))
                 setGameModal({message:'Player 2 win!',visible:true})
             }
-        }
-
-        if(checkIfDraw(board)) {
+        } else if(checkIfDraw(board)) {
             setScore(prevData => ({
                 ...prevData,
                 draw: prevData.draw + 1
@@ -70,12 +72,12 @@ const Game = () => {
         let count = 0;
 
         board.map((b:any) => {
-            if(b !== "") {
+            if(b !== '') {
                 count++;
             }
         })
-        console.log(`count:`,count);
-        return count >= 9 ? true : false
+        console.log(`count:`,count)
+        return count === 8 ? true : false
     }
 
     const checkWinner = (board:any) => {
@@ -107,7 +109,7 @@ const Game = () => {
     }
 
     const handleOnClickStop = async () => {
-
+        setLoadingVisible(true)
         let session:ISession = {
             score: score,
             playerOne: data.playerOneName,
@@ -117,8 +119,10 @@ const Game = () => {
         try {
             await storeSession(session);
             setGameToDefault()
+            setLoadingVisible(false)
             navigate('/');
         } catch (error) {
+            setLoadingVisible(false)
             alert('Failed: Unable to store session')
         }
     }
@@ -129,8 +133,15 @@ const Game = () => {
         setGameModal({visible:false,message:''})
     }
 
+    useEffect(() => {
+        if(!data) {
+            navigate('/');
+        }
+    },[])
+
     return (
         <div className="h-screen">
+            <Loading visible={loadingVisible}/>
             <GameModal 
                 visible={gameModal.visible}
                 message={gameModal.message}
@@ -150,16 +161,11 @@ const Game = () => {
                     <Box onClickBox={() => handleOnClickBox(8)} value={board[8]}/>
                 </div>
 
-                <div className="flex-col items-center justify-center mt-4">
-                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between text-white text-sm">
-                        <h4 className="font-bold">Player 1: {data.playerOneName.toUpperCase()} (X)</h4>
-                        <h4 className="font-bold">Player 2: {data.playerTwoName.toUpperCase()} (O)</h4>
-                    </div>
-                    <div className="mt-3 flex flex-col items-start md:items-center justify-center text-white text-lg font-bold">
-                        <h3>{score.playerOne} - {score.draw} - {score.playerTwo}</h3>
-                        <h5 className="text-sm font-normal">Score</h5>
-                    </div>
-                </div>
+                <ScoreBoard 
+                    playerOneName={data.playerOneName}
+                    playerTwoName={data.playerTwoName}
+                    score={score}
+                />
 
             </Board>
         </div>
