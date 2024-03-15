@@ -23,7 +23,7 @@ const storeGame = async(req,res) => {
 
 const getAllGames = async (req,res) => {
     try {
-        const games = await Game.find().sort({ createdAt: -1 });
+        const games = await Game.find().sort({ createdAt: -1 }).limit(100);
         res.status(200).json(games)
     } catch (error) {
         res.status(500).json({message: error.message})

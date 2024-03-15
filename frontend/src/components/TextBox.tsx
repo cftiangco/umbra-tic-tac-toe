@@ -9,7 +9,7 @@ interface ITextBox {
 const TextBox = ({label,value,onChange}:ITextBox) => {
     return (
         <div className="flex flex-col gap-2">
-            <label htmlFor="player1">{label} :</label>
+            <label className="text-slate-100" htmlFor="player1">{label} :</label>
             <input
                 value={value}
                 id="player1" 
