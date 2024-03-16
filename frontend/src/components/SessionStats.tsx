@@ -42,7 +42,6 @@ const SessionStats = ({
                         label="P2"
                         score={playerTwoScore}                                        
                     />
-                    
                 </div>
             </div>
         </div>

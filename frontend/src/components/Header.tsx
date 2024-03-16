@@ -7,7 +7,7 @@ const Header = () => {
             <Link to="/" className="ms-5">
               <FaHouse className="text-2xl text-slate-800 hover:text-slate-600"/>
             </Link>
-          <h1 className="me-5 text-sm text-slate-700"><strong>Umbra Exam</strong> | Crimson Tiangco</h1>
+            <h1 className="me-5 text-sm text-slate-700"><strong>Umbra Exam</strong> | Crimson Tiangco</h1>
         </header>
     )
 }

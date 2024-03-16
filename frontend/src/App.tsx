@@ -11,8 +11,7 @@ function App() {
 
   return (
     <div className="bg-slate-700">
-      
-
+  
       <Router>
          <Header />
           <Routes>
