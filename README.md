@@ -5,7 +5,7 @@ Crimson Tiangco Umbra Digital Exam (Tik Tac Toe)
 ## Instruction on how to run this application
 
 - You should have docker and docker-compose extension installed on your local machine.
-- Run the below command in the root folder where the docker-compose.yml file is located.
+- Run the below command in the root folder where the docker-compose.yml file is located using your terminal.
 - Make sure ports 3000 and 8000 are available on your machine.
 
 ```http
